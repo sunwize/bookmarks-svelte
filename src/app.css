@@ -2,10 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    src: url('/fonts/Inter.ttf') format('truetype');
+}
+
 :root {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     -webkit-tap-highlight-color: transparent;
     font-size: 16px;
+    font-family: Inter, sans-serif;
 }
 
 svg {
