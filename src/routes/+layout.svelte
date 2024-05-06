@@ -1,10 +1,17 @@
 <script lang="ts">
     import "../app.css";
 
+    import CollectionSelector from "$components/drawers/CollectionSelector.svelte";
+    import CreationDialog from "$components/drawers/CreationDialog.svelte";
     import Navbar from "$components/ui/Navbar.svelte";
+    import Toaster from "$components/ui/Toaster.svelte";
 </script>
 
 <Navbar />
-<main class="relative flex flex-col w-full flex-1 bg-white/10 text-white max-w-app mx-auto py-3 px-2 md:p-6">
+<main class="relative flex flex-col w-full flex-1 bg-white/10 max-w-app mx-auto py-3 px-2 md:p-6">
     <slot />
 </main>
+<CreationDialog />
+<CollectionSelector />
+
+<Toaster />

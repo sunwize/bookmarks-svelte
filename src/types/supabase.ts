@@ -14,29 +14,18 @@ export type Database = {
           created_at: string
           id: string
           title: string
-          user_id: string | null
         }
         Insert: {
           created_at?: string
           id?: string
           title: string
-          user_id?: string | null
         }
         Update: {
           created_at?: string
           id?: string
           title?: string
-          user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "bookmark_lists_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       bookmarks: {
         Row: {
@@ -49,7 +38,6 @@ export type Database = {
           sitename: string
           title: string
           url: string
-          user_id: string | null
         }
         Insert: {
           created_at?: string
@@ -61,7 +49,6 @@ export type Database = {
           sitename: string
           title: string
           url: string
-          user_id?: string | null
         }
         Update: {
           created_at?: string
@@ -73,7 +60,6 @@ export type Database = {
           sitename?: string
           title?: string
           url?: string
-          user_id?: string | null
         }
         Relationships: [
           {
@@ -81,13 +67,6 @@ export type Database = {
             columns: ["list_id"]
             isOneToOne: false
             referencedRelation: "bookmark_lists"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "bookmarks_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
             referencedColumns: ["id"]
           },
         ]

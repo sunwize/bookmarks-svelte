@@ -1,7 +1,7 @@
 <script lang="ts">
-    import type { Tables } from "$types/supabase";
+    import type { Metadata } from "$types/bookmark";
 
-    export let bookmark: Tables<"bookmarks">;
+    export let bookmark: Metadata;
 </script>
 
 <div class="flex gap-2 bg-white/10 rounded-xl transition active:bg-white/20 md:hover:bg-white/20 p-2">

@@ -8,11 +8,17 @@
     import Button from "$components/ui/Button.svelte";
     import Loader from "$components/ui/Loader.svelte";
     import { supabase } from "$lib/services/supabase";
+    import { creationTab, isCreationDialogVisible } from "$lib/stores/drawers";
     import type { Tables } from "$types/supabase";
 
     let collection: Tables<"bookmark_lists"> | null = null;
     let bookmarks: Tables<"bookmarks">[] = [];
     let isLoading = false;
+
+    const openCreationDialog = () => {
+        creationTab.set("bookmark");
+        isCreationDialogVisible.set(true);
+    };
 
     const loadBookmarks = async () => {
         const { error, data } = await supabase
@@ -71,7 +77,7 @@
     </div>
 
     <div class="mb-3">
-        <Button>
+        <Button on:click={openCreationDialog}>
             <HeroiconsPlusSmall />
             <span>Add a bookmark</span>
         </Button>
@@ -89,4 +95,3 @@
         {/each}
     </ul>
 {/if}
-
