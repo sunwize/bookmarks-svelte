@@ -1,17 +1,20 @@
 <script lang="ts">
-    import { mode } from "mode-watcher";
     import { Toaster as Sonner } from "svelte-sonner";
 </script>
 
 <Sonner
-    theme={$mode}
-    class="toaster group"
+    theme="dark"
+    position="bottom-center"
     toastOptions={{
         classes: {
-            toast: "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
-            description: "group-[.toast]:text-muted-foreground",
-            actionButton: "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
-            cancelButton: "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+            toast: "shadow bg-slate-800 border-2 border-white/20 rounded-2xl",
+            success: "border-green-400",
+            info: "border-blue-400",
+            warning: "border-yellow-400",
+            error: "border-red-400",
+            description: "",
+            actionButton: "",
+            cancelButton: "",
         },
     }}
     {...$$restProps}

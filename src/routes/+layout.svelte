@@ -1,6 +1,7 @@
 <script lang="ts">
     import "../app.css";
 
+    import CollectionEditor from "$components/drawers/CollectionEditor.svelte";
     import CollectionSelector from "$components/drawers/CollectionSelector.svelte";
     import CreationDialog from "$components/drawers/CreationDialog.svelte";
     import Navbar from "$components/ui/Navbar.svelte";
@@ -13,5 +14,6 @@
 </main>
 <CreationDialog />
 <CollectionSelector />
+<CollectionEditor />
 
 <Toaster />

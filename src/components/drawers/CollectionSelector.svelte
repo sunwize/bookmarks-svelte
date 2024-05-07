@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import { toast } from "svelte-sonner";
 
     import BiPlusCircle from "~icons/bi/plus-circle";
     import HeroiconsPlusSmall from "~icons/heroicons/plus-small";
@@ -51,6 +52,8 @@
                     sitename: $metadata.sitename,
                     domain: $metadata.domain,
                 });
+
+            toast.success("Bookmark added to collection");
         } finally {
             isSaving = false;
             isCollectionSelectorVisible.set(false);

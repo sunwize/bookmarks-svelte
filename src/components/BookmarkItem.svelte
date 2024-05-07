@@ -1,11 +1,12 @@
 <script lang="ts">
+    import Image from "$components/ui/Image.svelte";
     import type { Metadata } from "$types/bookmark";
 
     export let bookmark: Metadata;
 </script>
 
 <div class="flex gap-2 bg-white/10 rounded-xl transition active:bg-white/20 md:hover:bg-white/20 p-2">
-    <img
+    <Image
         src={bookmark.image_url}
         alt={bookmark.title}
         class="w-[70px] h-[70px] rounded-lg object-cover shrink-0"

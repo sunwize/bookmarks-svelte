@@ -8,12 +8,12 @@
     import Button from "$components/ui/Button.svelte";
     import Loader from "$components/ui/Loader.svelte";
     import { supabase } from "$lib/services/supabase";
-    import { creationTab, isCreationDialogVisible } from "$lib/stores/drawers";
+    import { creationTab, isCollectionEditorVisible, isCreationDialogVisible } from "$lib/stores/drawers";
     import type { Tables } from "$types/supabase";
 
     let collection: Tables<"bookmark_lists"> | null = null;
     let bookmarks: Tables<"bookmarks">[] = [];
-    let isLoading = false;
+    let isLoading = true;
 
     const openCreationDialog = () => {
         creationTab.set("bookmark");
@@ -58,6 +58,23 @@
 
     onMount(() => {
         load();
+
+        const collectionEditorSubscription = isCollectionEditorVisible.subscribe((value) => {
+            if (!value) {
+                load();
+            }
+        });
+
+        const creationDialogSubscription = isCreationDialogVisible.subscribe((value) => {
+            if (!value) {
+                load();
+            }
+        });
+
+        return () => {
+            collectionEditorSubscription();
+            creationDialogSubscription();
+        };
     });
 </script>
 
@@ -68,7 +85,10 @@
 {:else if collection}
     <div class="flex items-center justify-between mb-6">
         <h2 class="text-3xl font-bold truncate">{collection.title}</h2>
-        <Button class="bg-transparent text-white/50 hover:text-white">
+        <Button
+            on:click={() => isCollectionEditorVisible.set(true)}
+            class="bg-transparent text-white/50 hover:text-white"
+        >
             <HeroiconsEllipsisVertical20Solid
                 width="24"
                 height="24"

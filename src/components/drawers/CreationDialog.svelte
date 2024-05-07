@@ -38,7 +38,7 @@
                 domain: metadata.domain,
             });
 
-        toast.success("Bookmark added to collection", { position: "bottom-center" });
+        toast.success("Bookmark added to collection");
     };
 
     const extractBookmark = async (url: string) => {
@@ -51,17 +51,16 @@
             }
 
             metadata.set(_metadata);
-            isCreationDialogVisible.set(false);
 
             const sharedUrl = getSharedUrl();
 
             if (!sharedUrl && $page.url.pathname.startsWith(Route.Collections)) {
                 await saveBookmarkToCollection(_metadata);
+                isCreationDialogVisible.set(false);
             } else {
+                isCreationDialogVisible.set(false);
                 isCollectionSelectorVisible.set(true);
             }
-
-            toast.success("Bookmark created successfully", { position: "bottom-center" });
         } finally {
             isExtractingBookmark = false;
         }
@@ -128,17 +127,13 @@
     <hr class="opacity-20" />
     <div class="p-3">
         {#if $creationTab === "bookmark"}
-            <label
-                for="bookmark-url"
-                class="block font-medium mb-1"
-            >
+            <p class="block font-medium mb-1">
                 Bookmark URL
-            </label>
+            </p>
             <Input
                 bind:value={bookmarkUrl}
                 disabled={isExtractingBookmark}
                 placeholder="https://..."
-                id="bookmark-url"
             />
         {:else}
             <label
