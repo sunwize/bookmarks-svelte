@@ -1,4 +1,4 @@
-import axios from "axios";
+import { ofetch } from "ofetch";
 
 type Response = {
   title: string
@@ -11,7 +11,8 @@ type Response = {
 }
 
 export const extractTikTokMetadata = async (url: string) => {
-  const { data } = await axios.get<Response>("https://www.tiktok.com/oembed", {
+  const data = await ofetch<Response>("https://www.tiktok.com/oembed", {
+    method: "GET",
     params: { url },
   });
 

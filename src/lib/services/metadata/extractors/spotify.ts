@@ -1,4 +1,4 @@
-import axios from "axios";
+import { ofetch } from "ofetch";
 
 type Response = {
   title: string
@@ -11,7 +11,8 @@ type Response = {
 }
 
 export const extractSpotifyMetadata = async (url: string) => {
-  const { data } = await axios.get<Response>("https://open.spotify.com/oembed", {
+  const data = await ofetch<Response>("https://open.spotify.com/oembed", {
+    method: "GET",
     params: { url },
   });
 

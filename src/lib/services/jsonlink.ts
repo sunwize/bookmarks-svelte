@@ -1,4 +1,4 @@
-import axios from "axios";
+import { ofetch } from "ofetch";
 
 import { env } from "$env/dynamic/public";
 
@@ -12,7 +12,7 @@ type ApiResponse = {
   domain: string
 }
 
-const api = axios.create({
+const api = ofetch.create({
   baseURL: "https://jsonlink.io",
   params: {
     api_key: env.PUBLIC_JSON_LINK_API_KEY,
@@ -20,7 +20,8 @@ const api = axios.create({
 });
 
 export const loadMetadata = async (url: string) => {
-  const { data } = await api.get<ApiResponse>("/api/extract", {
+  const data = await api<ApiResponse>("/api/extract", {
+    method: "GET",
     params: {
       url,
     },
