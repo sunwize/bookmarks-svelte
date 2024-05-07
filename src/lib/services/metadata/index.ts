@@ -1,5 +1,5 @@
 import axios from "axios";
-import { JSDOM } from "jsdom";
+import * as cheerio from "cheerio";
 
 import { MetadataExtractors } from "$lib/services/metadata/extractors";
 import { extractDescription, extractFavicon, extractImage, extractSitename, extractTitle } from "$lib/services/metadata/utils";
@@ -24,14 +24,13 @@ export const extractMetadata = async (url: string) => {
     return extractor(responseUrl);
   }
 
-  const { window } = new JSDOM(response.data);
-  const document = window.document;
+  const $ = cheerio.load(response.data);
 
   return {
-    title: extractTitle(document)!,
-    description: extractDescription(document)!,
-    image_url: extractImage(document) || extractFavicon(document, responseUrl),
-    sitename: extractSitename(document, responseUrl),
+    title: extractTitle($)!,
+    description: extractDescription($)!,
+    image_url: extractImage($) || extractFavicon($, responseUrl),
+    sitename: extractSitename($, responseUrl),
     domain: urlObject.hostname,
     url,
   };

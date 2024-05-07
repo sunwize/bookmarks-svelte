@@ -35,10 +35,9 @@
 	"type": "module",
 	"dependencies": {
 		"@supabase/supabase-js": "^2.43.1",
-		"@types/jsdom": "^21.1.6",
 		"axios": "^1.6.8",
+		"cheerio": "^1.0.0-rc.12",
 		"clsx": "^2.1.1",
-		"jsdom": "^24.0.0",
 		"svelte-sonner": "^0.3.22",
 		"tailwind-merge": "^2.3.0",
 		"tailwind-variants": "^0.2.1",
