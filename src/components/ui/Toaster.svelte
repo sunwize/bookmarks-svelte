@@ -7,7 +7,7 @@
     position="bottom-center"
     toastOptions={{
         classes: {
-            toast: "shadow bg-slate-800 border-2 border-white/20 rounded-2xl",
+            toast: "shadow bg-slate-800 border-2 rounded-2xl",
             success: "border-green-400",
             info: "border-blue-400",
             warning: "border-yellow-400",

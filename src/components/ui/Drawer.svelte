@@ -1,9 +1,14 @@
 <script lang="ts">
     import { Drawer as DrawerPrimitive } from "vaul-svelte";
 
+    import { useModal } from "$lib/composables/useModal";
     import { cn } from "$lib/utils/style";
 
     export let visible: boolean;
+
+    const { isVisible } = useModal();
+
+    $: isVisible.set(visible);
 </script>
 
 <DrawerPrimitive.Root
@@ -11,10 +16,10 @@
     shouldScaleBackground={true}
 >
     <DrawerPrimitive.Portal>
-        <DrawerPrimitive.Overlay class="fixed inset-0 z-50 bg-black/80" />
+        <DrawerPrimitive.Overlay class="fixed inset-0 z-[1] bg-black/80" />
         <DrawerPrimitive.Content
             class={cn(
-                "w-full max-w-app max-h-[100dvh] fixed inset-x-0 bottom-0 z-50 flex flex-col rounded-t-xl border bg-slate-950 mx-auto border-white/20 focus-visible:outline-0",
+                "w-full max-w-app max-h-[100dvh] fixed inset-x-0 bottom-0 z-[1] flex flex-col rounded-t-xl border bg-slate-950 mx-auto border-white/20 focus-visible:outline-0",
                 $$restProps.class,
             )}
         >

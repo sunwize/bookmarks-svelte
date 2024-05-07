@@ -113,9 +113,9 @@
 
             if (!value) {
                 bookmarkIdsToRemove = [];
+            } else {
+                load();
             }
-
-            load();
         });
 
         return () => {
@@ -133,7 +133,7 @@
             <Loader />
         </div>
     {:else}
-        <div class="sticky top-0 bg-slate-950 z-10 flex items-center justify-between border-b border-white/40 p-3">
+        <div class="sticky top-0 bg-slate-950 z-[1] flex items-center justify-between border-b border-white/40 p-3">
             <Input
                 bind:value={collectionTitle}
                 placeholder="Collection name"
@@ -174,14 +174,16 @@
             </ul>
         {/if}
         <div class="sticky bottom-0 bg-slate-950 border-t border-white/40 p-3">
-            <Button
-                on:click={saveChanges}
-                loading={isSaving}
-                disabled={isSaving}
-                class="w-full text-xl"
-            >
-                Save changes
-            </Button>
+            <div class="grid grid-cols-1 gap-3">
+                <Button
+                    on:click={saveChanges}
+                    loading={isSaving}
+                    disabled={isSaving}
+                    class="w-full text-xl"
+                >
+                    Save changes
+                </Button>
+            </div>
         </div>
     {/if}
 </Drawer>

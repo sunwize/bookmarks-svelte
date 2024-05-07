@@ -5,7 +5,7 @@
 </script>
 
 {#if $isVisible}
-    <nav class="sticky top-0 z-10 bg-black w-full text-2xl md:text-3xl shrink-0 max-w-app mx-auto py-3 md:py-6">
+    <nav class="sticky top-0 z-[1] bg-black w-full text-2xl md:text-3xl shrink-0 max-w-app mx-auto py-3 md:py-6">
         <h1 class="flex items-center justify-center tracking-wide font-black uppercase">
             <span>Bookm</span>
             <MaterialSymbolsBookmarksOutline class="mx-[-1px] mt-[3px] w-[25px] h-[25px] md:w-[30px] md:h-[30px]" />

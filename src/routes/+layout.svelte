@@ -1,11 +1,24 @@
 <script lang="ts">
     import "../app.css";
 
+    import { onMount } from "svelte";
+
     import CollectionEditor from "$components/drawers/CollectionEditor.svelte";
     import CollectionSelector from "$components/drawers/CollectionSelector.svelte";
     import CreationDialog from "$components/drawers/CreationDialog.svelte";
     import Navbar from "$components/ui/Navbar.svelte";
     import Toaster from "$components/ui/Toaster.svelte";
+    import { openModalCount } from "$lib/composables/useModal";
+
+    onMount(() => {
+        const modalSubscription = openModalCount.subscribe((value) => {
+            document.body.style.overflow = value > 0 ? "hidden" : "";
+        });
+
+        return () => {
+            modalSubscription();
+        };
+    });
 </script>
 
 <Navbar />
