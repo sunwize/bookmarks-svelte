@@ -90,11 +90,21 @@
     };
 
     onMount(() => {
-        const unsubscribe = isCreationDialogVisible.subscribe((value) => {
+        const unsubscribe = isCreationDialogVisible.subscribe(async (value) => {
             if (!value) {
                 bookmarkUrl = "";
                 collectionTitle = "";
+                return;
             }
+
+            const sharedUrl = getSharedUrl();
+
+            if (!sharedUrl) {
+                return;
+            }
+
+            await extractBookmark(sharedUrl);
+            await goto(Route.Home);
         });
 
         return () => {
