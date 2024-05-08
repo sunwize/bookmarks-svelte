@@ -143,7 +143,9 @@
             <Input
                 bind:value={bookmarkUrl}
                 disabled={isExtractingBookmark}
+                type="text"
                 placeholder="https://..."
+                autocomplete="off"
             />
         {:else}
             <label
@@ -155,8 +157,10 @@
             <Input
                 bind:value={collectionTitle}
                 disabled={isCreatingCollection}
+                type="text"
                 placeholder="eg: Date ideas"
                 id="collection-title"
+                autocomplete="off"
             />
         {/if}
     </div>

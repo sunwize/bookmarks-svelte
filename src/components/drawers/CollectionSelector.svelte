@@ -87,16 +87,6 @@
                 </div>
             {/if}
         </div>
-        <div class="flex items-center justify-between px-6 mb-6">
-            <h1 class="text-2xl font-bold">Collections</h1>
-            <Button
-                disabled={isSaving}
-                class="flex items-center gap-1"
-            >
-                <HeroiconsPlusSmall />
-                <span>New collection</span>
-            </Button>
-        </div>
         <div class="border-b-2 border-white/20" />
         <ul class="grid grid-cols-1 gap-2">
             {#each collections as collection}
