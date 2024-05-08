@@ -9,8 +9,11 @@
     import Navbar from "$components/ui/Navbar.svelte";
     import Toaster from "$components/ui/Toaster.svelte";
     import { openModalCount } from "$lib/composables/useModal";
+    import { onAuthStateChange } from "$lib/utils/auth";
 
     onMount(() => {
+        onAuthStateChange();
+
         const modalSubscription = openModalCount.subscribe((value) => {
             document.body.style.overflow = value > 0 ? "hidden" : "";
         });
