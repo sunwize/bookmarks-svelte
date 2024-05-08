@@ -28,12 +28,20 @@ export const extractMetadata = async (url: string) => {
   return metadata;
 };
 
+const extractUrlFromString = (text: string) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const urls = text.match(urlRegex);
+
+    return urls?.[0];
+};
+
 export const getSharedUrl = () => {
   const params = new URLSearchParams(window.location.search);
 
   for (const key of ["title", "description", "name", "text", "url"]) {
-    const param = params.get(key);
-    if (param?.startsWith("http")) {
+    const param = extractUrlFromString(params.get(key) || "");
+
+    if (param) {
       return param;
     }
   }
