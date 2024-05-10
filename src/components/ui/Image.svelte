@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { createEventDispatcher } from "svelte";
+
     import CarbonImage from "~icons/carbon/image";
     import { cn } from "$lib/utils/style";
 
@@ -6,6 +8,8 @@
     export let alt: string;
 
     let isImageLoaded = false;
+
+    const dispatch = createEventDispatcher();
 </script>
 
 <img
@@ -14,6 +18,7 @@
     {alt}
     class={cn({ "hidden": !isImageLoaded }, $$restProps.class)}
     on:load={() => isImageLoaded = true}
+    on:error={() => dispatch("error")}
 />
 <CarbonImage
     {...$$restProps}
