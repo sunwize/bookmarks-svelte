@@ -10,7 +10,9 @@
     import Button from "$components/ui/Button.svelte";
     import ConfirmDialog from "$components/ui/ConfirmDialog.svelte";
     import EmptyPlaceholder from "$components/ui/EmptyPlaceholder.svelte";
+    import InfiniteScroll from "$components/ui/InfiniteScroll.svelte";
     import Loader from "$components/ui/Loader.svelte";
+    import { usePagination } from "$lib/composables/usePagination";
     import { supabase } from "$lib/services/supabase";
     import { creationTab, isCollectionEditorVisible, isCreationDialogVisible } from "$lib/stores/drawers";
     import { Route } from "$types/routes";
@@ -22,24 +24,39 @@
     let isDeleteDialogVisible = false;
     let isDeleting = false;
 
+    const {
+        hasNextPage,
+        getPagination,
+        nextPage,
+        resetPagination,
+    } = usePagination();
+
     const openCreationDialog = () => {
         creationTab.set("bookmark");
         isCreationDialogVisible.set(true);
     };
 
     const loadBookmarks = async () => {
+        if (!$hasNextPage) {
+            return;
+        }
+
+        const { from, to } = getPagination();
+
         const { error, data } = await supabase
             .from("bookmarks")
             .select()
             .eq("list_id", $page.params.id)
-            .order("created_at", { ascending: false });
+            .order("created_at", { ascending: false })
+            .range(from, to);
 
         if (error) {
             console.error(error);
             return;
         }
 
-        bookmarks = data;
+        bookmarks = [...bookmarks, ...data];
+        nextPage(bookmarks.length);
     };
 
     const loadCollection = async () => {
@@ -84,15 +101,31 @@
     onMount(() => {
         load();
 
-        const collectionEditorSubscription = isCollectionEditorVisible.subscribe((value) => {
+        let _isCollectionEditorInitialized = $isCollectionEditorVisible;
+        const collectionEditorSubscription = isCollectionEditorVisible.subscribe(async (value) => {
+            if (!_isCollectionEditorInitialized) {
+                _isCollectionEditorInitialized = true;
+                return;
+            }
+
             if (!value) {
-                load();
+                await resetPagination();
+                bookmarks = [];
+                await load();
             }
         });
 
-        const creationDialogSubscription = isCreationDialogVisible.subscribe((value) => {
+        let _isCreationDialogInitialized = $isCreationDialogVisible;
+        const creationDialogSubscription = isCreationDialogVisible.subscribe(async (value) => {
+            if (!_isCreationDialogInitialized) {
+                _isCreationDialogInitialized = true;
+                return;
+            }
+
             if (!value) {
-                load();
+                await resetPagination();
+                bookmarks = [];
+                await load();
             }
         });
 
@@ -144,18 +177,20 @@
             </EmptyPlaceholder>
         </div>
     {:else}
-        <ul class="grid grid-cols-1 gap-2">
-            {#each bookmarks as bookmark}
-                <li>
-                    <a
-                        href={bookmark.url}
-                        target="_blank"
-                    >
-                        <BookmarkItem {bookmark} />
-                    </a>
-                </li>
-            {/each}
-        </ul>
+        <InfiniteScroll on:bottom={() => loadBookmarks()}>
+            <ul class="grid grid-cols-1 gap-2">
+                {#each bookmarks as bookmark}
+                    <li>
+                        <a
+                            href={bookmark.url}
+                            target="_blank"
+                        >
+                            <BookmarkItem {bookmark} />
+                        </a>
+                    </li>
+                {/each}
+            </ul>
+        </InfiniteScroll>
     {/if}
 {/if}
 
